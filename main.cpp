@@ -90,5 +90,5 @@ private:
 BOOST_PYTHON_MODULE(ztmapi_core){
     namespace py = boost::python;
     py::class_<ScheduleManager>("ScheduleManager")
-            .de("download_schedule", &ScheduleManager::downloadSchedule);
+            .def("download_schedule", &ScheduleManager::downloadSchedule);
 }
