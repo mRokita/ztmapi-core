@@ -4,11 +4,15 @@
 #include <curlpp/Options.hpp>
 #include <fstream>
 #include <ctime>
+#include <boost/python/class.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
 
 
 class ScheduleManager {
 public:
     const unsigned short SCHEDULE_ID_LENGTH = 7;
+
 
     explicit ScheduleManager(tm* date){
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
@@ -19,13 +23,15 @@ public:
      * Set the timezone to Poland/Warsaw and apply today's date
      * @return ScheduleManager with _scheduleId for today
      */
-    static ScheduleManager forToday(){
-        char env[] = "TZ=Poland/Warsaw";
+    ScheduleManager(){
+        char env[] = "TZ=CET";
         putenv(env);
         time_t now;
         time(&now);
-        return ScheduleManager(localtime(&now));
+        this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
+        strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", localtime(&now));
     }
+
 
     /**
      * Download the compressed schedule to schedule.7z, then extract the schedule file.
@@ -45,13 +51,6 @@ public:
                 throw e;
             }
         }
-    }
-
-    /**
-     * Parse the downloaded schedule
-     */
-    void parseSchedule(){
-
     }
 
 private:
@@ -88,9 +87,8 @@ private:
     }
 };
 
-
-int main() {
-    ScheduleManager sm = ScheduleManager::forToday();
-    sm.downloadSchedule();
-    return 0;
+BOOST_PYTHON_MODULE(ztmapi_core){
+    namespace py = boost::python;
+    py::class_<ScheduleManager>("ScheduleManager")
+            .de("download_schedule", &ScheduleManager::downloadSchedule);
 }
