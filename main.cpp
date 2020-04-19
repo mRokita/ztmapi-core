@@ -14,11 +14,6 @@ public:
     const unsigned short SCHEDULE_ID_LENGTH = 7;
 
 
-    explicit ScheduleManager(tm* date){
-        this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
-        strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", date);
-    }
-
     /**
      * Set the timezone to Poland/Warsaw and apply today's date
      * @return ScheduleManager with _scheduleId for today
@@ -32,6 +27,9 @@ public:
         strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", localtime(&now));
     }
 
+    ~ScheduleManager(){
+        free(this->_scheduleId);
+    }
 
     /**
      * Download the compressed schedule to schedule.7z, then extract the schedule file.
