@@ -4,17 +4,25 @@
 #include <regex>
 #include <iomanip>
 
-
-BusStopParser::BusStopParser(std::string fileName)
+BusStopParser::BusStopParser()
+{
+	PrepareDate();
+	llParser = new LL_Parser();
+	zpParser = new ZP_Parser();
+}
+BusStopParser::~BusStopParser()
+{
+	delete llParser;
+	delete zpParser;
+}
+BusStopParser::BusStopParser(std::string fileName) : BusStopParser()
 {
 	file->open(fileName, std::ios::in);
-	PrepareDate();
 }
 
-BusStopParser::BusStopParser(std::fstream* fileRef)
+BusStopParser::BusStopParser(std::fstream* fileRef) : BusStopParser()
 {
 	file = fileRef;
-	PrepareDate();
 }
 
 void BusStopParser::PrepareDate()
@@ -59,7 +67,10 @@ void BusStopParser::Parse()
 			ParseSM(line);
 			break;
 		case Categories::ZP:
-			zpParser.Parse(line);
+			zpParser->Parse(line);
+			break;
+		case Categories::LL:
+			llParser->Parse(line);
 			break;
 		}
 
@@ -95,7 +106,15 @@ void BusStopParser::ParseCategory(std::string line)
 		std::regex reg("(\\d+)");
 		std::smatch wynik;
 		std::regex_search(line, wynik, reg);
-		zpParser.setLiczbaZespolowPrzystankowych(std::stoi(wynik[1]));
+		zpParser->setLiczbaZespolowPrzystankowych(std::stoi(wynik[1]));
+	}
+	else if (wynik[1] == "LL")
+	{
+		curCategory = Categories::LL;
+		std::regex reg("(\\d+)");
+		std::smatch wynik;
+		std::regex_search(line, wynik, reg);
+		llParser->ustawLiczbeLinii(std::stoi(wynik[1]));
 	}
 
 	linesInCategory = std::stoi(wynik[2]);
