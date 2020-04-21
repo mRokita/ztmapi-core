@@ -10,8 +10,7 @@ int main()
 	//llparser.ParsePrzebiegiKursow("");
 
 	std::fstream rozklad;
-	//rozklad.open("RA200322.txt", std::ios::in);
-	rozklad.open("pliki/LL4.txt", std::ios::in);
+	rozklad.open("RA200322.txt", std::ios::in);
 	BusStopParser parser(&rozklad);
 	parser.Parse();
 	return 0;

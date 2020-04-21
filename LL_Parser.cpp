@@ -10,7 +10,6 @@ void LL_Parser::Parse(std::string line)
 {
 	if (aktualnaSekcja == Podsekcje::NONE)
 	{
-		std::cout << "BRAK";
 		// Pobieramy rodzaj podsekcji i iloœæ elementów
 		ParseOtwarciePodsekcji(line);
 	}
@@ -18,7 +17,6 @@ void LL_Parser::Parse(std::string line)
 	{
 		if (counterLinii <= liczbaLinii)
 		{
-			std::cout << "LINIA" << std::endl;
 			// Pobieramy numer linii i jej charakter
 			ParseOpisLinii(line);
 			ResetujPodsekcje();
@@ -26,7 +24,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::TR)
 	{
-		std::cout << "TR: " << counterTR << std::endl;
 		// Pobieramy opis przebiegu trasy
 		if (counterTR <= liczbaPrzebiegowTras) 
 			ParsePrzebiegTrasy(line);
@@ -35,7 +32,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::LW)    // OK!
 	{
-		std::cout << "LW: " << counterLW << std::endl;
 		if (counterLW <= liczbaWierszyOpisuTrasyLW)
 		{
 			ParseOpisPrzebiegu(line);
@@ -46,7 +42,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::RP) // OK!
 	{
-		std::cout << "RP: " << counterRP << std::endl;
 		if (counterRP <= liczbaTabelOdjazdow)
 		{
 			ParseRPPrzystanek(line);
@@ -60,7 +55,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::TD)	// OK!
 	{
-		std::cout << "TD: " << counterTD << std::endl;
 		if (counterTD <= liczbaTypowDniKursowania)
 		{
 			ParseTypKursowania(line);
@@ -71,7 +65,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::WG)    // OK!
 	{
-		std::cout << "WG: " << counterWG << std::endl;
 		if (counterWG <= liczbaGodzin)
 		{
 			ParseGodzinyOdjazdow(line);
@@ -82,7 +75,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::OD)     // OK!
 	{
-		std::cout << "OD: " << counterOD << std::endl;
 		if (counterOD <= liczbaOdjazdow)
 		{
 			ParseOdjazdy(line);
@@ -96,7 +88,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::OP)     // OK!
 	{
-		std::cout << "OP: " << counterOP << std::endl;
 		if (counterOP <= liczbaWierszyOpisu)
 		{
 			// TODO CO MA ROBIC
@@ -111,7 +102,6 @@ void LL_Parser::Parse(std::string line)
 	}
 	else if (aktualnaSekcja == Podsekcje::WK)		// OK!
 	{
-		std::cout << "WK: " << counterWK << std::endl;
 		if (counterWK <= liczbaPrzebiegowKursow)
 		{
 			ParsePrzebiegiKursow(line);
@@ -144,7 +134,6 @@ void LL_Parser::ParseOtwarciePodsekcji(std::string line)
 	// wynik[2] = wartosc
 	int wartosc = std::stoi(wynik[2]);
 	
-	std::cout << " " << wynik[1] << std::endl;
 	if (wynik[1] == "TR")
 	{
 		aktualnaSekcja = Podsekcje::TR;

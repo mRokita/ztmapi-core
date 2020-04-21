@@ -49,7 +49,6 @@ void ZP_Parser::Parse(std::string line)
 	{
 		// Rozpoczynamy nowy zespó³ przystankowy
 		aktualnyZespolPrzystankowy = std::stoi(line.substr(3, 4));
-		std::cout << aktualnyZespolPrzystankowy << std::endl;
 	}
 	else if (liczbaPrzystankow == 0)
 	{

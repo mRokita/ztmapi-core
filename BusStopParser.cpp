@@ -29,7 +29,6 @@ void BusStopParser::PrepareDate()
 {
 	//auto t = std::time(nullptr);
 	//auto tm = *std::localtime(&t);
-	//std::cout << std::put_time(&tm, "%F");
 	//std::stringstream curdate;
 	//curdate << std::put_time(&tm, "%F");
 	//curDate = curdate.str();
@@ -45,35 +44,38 @@ void BusStopParser::Parse()
 
 	while (std::getline(*file, line))
 	{
-		switch (curCategory)
+		if (line != koniecKategorii)
 		{
-		case Categories::NONE:
-			ParseCategory(line);
-			break;
-		case Categories::TY:
-			ParseTY(line);
-			break;
-
-		case Categories::KA:
-			ParseKA(line);
-			break;
-		case Categories::ZA:
-			ParseZA(line);
-			break;
-		case Categories::KD:
-			ParseKD(line);
-			break;
-		case Categories::SM:
-			ParseSM(line);
-			break;
-		case Categories::ZP:
-			zpParser->Parse(line);
-			break;
-		case Categories::LL:
-			llParser->Parse(line);
-			break;
+			switch (curCategory)
+			{
+			case Categories::NONE:
+				ParseCategory(line);
+				break;
+			case Categories::TY:
+				ParseTY(line);
+				break;
+			case Categories::KA:
+				ParseKA(line);
+				break;
+			case Categories::ZA:
+				ParseZA(line);
+				break;
+			case Categories::KD:
+				ParseKD(line);
+				break;
+			case Categories::SM:
+				ParseSM(line);
+				break;
+			case Categories::ZP:
+				zpParser->Parse(line);
+				break;
+			case Categories::LL:
+				llParser->Parse(line);
+				break;
+			}
 		}
-
+		else
+			curCategory = Categories::NONE;
 	}
 }
 
@@ -117,6 +119,10 @@ void BusStopParser::ParseCategory(std::string line)
 		llParser->ustawLiczbeLinii(std::stoi(wynik[1]));
 	}
 
+
+	koniecKategorii = "#";
+	koniecKategorii.append(wynik[1]);
+
 	linesInCategory = std::stoi(wynik[2]);
 	linesCounter = 0;
 }
@@ -124,7 +130,6 @@ void BusStopParser::ParseCategory(std::string line)
 void BusStopParser::ParseKA(std::string line)
 {
 	std::string regs = curDate + "\\s*(\\d+)\\s*(.*)";
-
 	std::regex reg(regs);
 	std::smatch wynik;
 	if (!std::regex_search(line, wynik, reg))
@@ -145,7 +150,6 @@ void BusStopParser::ParseKA(std::string line)
 	for (int i = 1; i <= counter; i++)
 		dzisiejszeTypyKursowania.push_back(wynik[i]);
 
-	std::cout << dzisiejszeTypyKursowania[1];
 }
 
 

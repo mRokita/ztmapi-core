@@ -31,6 +31,7 @@ private:
 	ZP_Parser* zpParser;
 	LL_Parser* llParser;
 	BusStopParser::Categories curCategory = Categories::NONE;
+	std::string koniecKategorii;
 	int linesInCategory;
 	int linesCounter;
 	std::fstream* file;
