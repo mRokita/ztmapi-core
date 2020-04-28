@@ -4,9 +4,11 @@ build:
   stage: build
   image: ubuntu:bionic
   script:
-    - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libcurl4-openssl-dev cmake p7zip-full
+    - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libboost-regex-dev libboost-locale-dev libcurl4-openssl-dev cmake p7zip-full virtualenv
     - mkdir build
     - cd build
+    - virtualenv venv -p python3
+    - source venv/bin/activate
     - export UBUNTU=1
     - cmake ..
     - make
