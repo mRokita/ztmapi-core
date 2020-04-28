@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
+include(FindPkgConfig)
 project(ztmapi_core)
 set(CMAKE_CXX_STANDARD 14)
 
@@ -11,7 +12,7 @@ else()
 endif()
 find_package(Boost COMPONENTS regex locale ${BOOST_PYTHONLIB} REQUIRED)
 find_package(PythonLibs 3 REQUIRED)
-
+pkg_check_modules(CURLPP REQUIRED curlpp)
 
 
 set(Boost_USE_STATIC_LIBS OFF)

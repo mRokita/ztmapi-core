@@ -12,6 +12,7 @@
 #include "DayType.h"
 #include "StopGroup.h"
 
+
 class ScheduleManager {
 public:
     const unsigned short SCHEDULE_ID_LENGTH = 7;
