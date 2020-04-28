@@ -1,12 +1,18 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.10)
 project(ztmapi_core)
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(PythonInterp 3 REQUIRED)
 
-find_package(PythonInterp)
-find_package(Boost COMPONENTS regex locale python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-find_package(PythonInterp 3)
+if($ENV{UBUNTU})
+    set(BOOST_PYTHONLIB python-py${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+else()
+    set(BOOST_PYTHONLIB python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+endif()
+find_package(Boost COMPONENTS regex locale ${BOOST_PYTHONLIB} REQUIRED)
 find_package(PythonLibs 3 REQUIRED)
+
+
 
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)

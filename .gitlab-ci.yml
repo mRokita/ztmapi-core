@@ -1,0 +1,14 @@
+stages:
+  - build
+build:
+  stage: build
+  script:
+    - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libcurl4-openssl-dev cmake p7zip-full
+    - mkdir build
+    - cd build
+    - export UBUNTU=1
+    - cmake ..
+    - make
+  artifacts:
+    paths:
+      - build/ztmapi_core.so
