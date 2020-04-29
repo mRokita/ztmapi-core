@@ -4,7 +4,7 @@
 #include "TYSection.h"
 #include "TransparentSection.h"
 #include "KDSection.h"
-
+#include "LLSection.h"
 
 void Section::openSection(const std::string& sectionKey) {
     if(currentSubSection) {
@@ -17,6 +17,8 @@ void Section::openSection(const std::string& sectionKey) {
         currentSubSection = std::make_shared<ZASection>(this->manager);
     } else if (sectionKey == "PR") {
         currentSubSection = std::make_shared<PRSection>(this->manager);
+    } else if (sectionKey == "LL") {
+        currentSubSection = std::make_shared<LLSection>(this->manager);
     } else if (sectionKey == "KD") {
         currentSubSection = std::make_shared<KDSection>(this->manager);
     } else if (sectionKey == "ZP") {

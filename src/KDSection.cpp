@@ -12,5 +12,7 @@ void KDSection::_processLine(const std::string& line) {
         manager->setDayType(match["line"], match["day_type"]);
     } else if (boost::u32regex_search(line, match, expDate)) {
         active = match["date"] == manager->getScheduleDate();
+    } else {
+        throw CouldNotParseLineException(line);
     }
 }

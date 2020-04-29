@@ -87,12 +87,17 @@ public:
         _lineToDayType[line] = dayType;
     }
 
+    bool isLineActive(const std::string& line){
+        return _lineToDayType.find(line) != _lineToDayType.end();
+    }
+
     /**
      * Get line's day type for today
      */
     std::string getDayType(const std::string& line){
         return _lineToDayType[line];
     }
+
 private:
     char* _scheduleId;
     char* _scheduleDate;
