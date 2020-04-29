@@ -11,7 +11,7 @@ void ScheduleManager::processSchedule() {
     int i = 0;
     while (std::getline(scheduleFile, line) && i < 4000000){
         boost::smatch match;
-        static const boost::regex expOpenSection(R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*)\s*$)");
+        static const boost::regex expOpenSection(R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))");
         // match[1] * or # == OPEN or CLOSE
         // match[2] Section ID (two letters)
         if(boost::regex_search(line, match, expOpenSection)){

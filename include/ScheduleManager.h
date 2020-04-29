@@ -12,17 +12,19 @@
 #include "DayType.h"
 #include "StopGroup.h"
 #include "Stop.h"
-
+#include <map>
 
 class ScheduleManager {
 public:
     const unsigned short SCHEDULE_ID_LENGTH = 7;
+    const unsigned short DATE_LENGTH = 11;
     std::vector<DayType> dayTypes;
     std::vector<StopGroup> stopGroups;
     std::vector<Stop> stops;
 
     explicit ScheduleManager(tm* date){
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
+        this->_scheduleDate = new char[DATE_LENGTH];
         strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", date);
     }
 
@@ -36,10 +38,12 @@ public:
         time_t now;
         time(&now);
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
+        this->_scheduleDate = new char[DATE_LENGTH];
         struct tm* tm = localtime(&now);
         // TODO: download for previous day if no avail for today
         tm->tm_mday += 1;
         strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", tm);
+        strftime(this->_scheduleDate, DATE_LENGTH, "%Y-%m-%d", tm);
     }
 
 
@@ -68,8 +72,31 @@ public:
      */
     void processSchedule();
 
+    /**
+     * Get schedule date in yyyy-mm-dd format
+     */
+    char* getScheduleDate(){
+        return _scheduleDate;
+    }
+
+    /**
+     * Should be only used inside KDSection::_processLine()
+     * Assigns a day type to a line.
+     */
+    void setDayType(const std::string& line, const std::string& dayType){
+        _lineToDayType[line] = dayType;
+    }
+
+    /**
+     * Get line's day type for today
+     */
+    std::string getDayType(const std::string& line){
+        return _lineToDayType[line];
+    }
 private:
     char* _scheduleId;
+    char* _scheduleDate;
+    std::map<std::string, std::string> _lineToDayType;
 
     /**
      * Get schedule file name in "RA%y%m%d.TXT" format

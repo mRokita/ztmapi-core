@@ -3,6 +3,7 @@
 #include "ZASection.h"
 #include "TYSection.h"
 #include "TransparentSection.h"
+#include "KDSection.h"
 
 
 void Section::openSection(const std::string& sectionKey) {
@@ -16,7 +17,10 @@ void Section::openSection(const std::string& sectionKey) {
         currentSubSection = std::make_shared<ZASection>(this->manager);
     } else if (sectionKey == "PR") {
         currentSubSection = std::make_shared<PRSection>(this->manager);
+    } else if (sectionKey == "KD") {
+        currentSubSection = std::make_shared<KDSection>(this->manager);
     } else if (sectionKey == "ZP") {
+        // Parent of PR, no need to parse body.
         currentSubSection = std::make_shared<TransparentSection>(this->manager);
     } else {
         throw InvalidSectionException("No implementation for sectionKey");
