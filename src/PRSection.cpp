@@ -1,11 +1,11 @@
-#include "ZPSection.h"
+#include "PRSection.h"
 
 /**
  * Extract stops from the ZP section.
  * Groups in the regular expresion: [id, group nme, region id, region name]
  * @param line A string like this one: "6635   Dziekanów Polski Wschód,            DP  DZIEKANÓW POLSKI"
  */
-void ZPSection::_processLine(const std::string &line) {
+void PRSection::_processLine(const std::string &line) {
     // TODO: Move stops to the PR subsection
     static const boost::u32regex expStopGroup = boost::make_u32regex(
             R"((?<id>\d{4})\s+(?<group_name>[\d[:L*:]].+?),?\s+(?<region_id>[\d[:L*:]-]{2})\s+(?<region_name>[[:L*:]].+)$)"

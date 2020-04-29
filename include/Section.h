@@ -32,19 +32,35 @@ public:
     const std::string line;
 };
 
-class Section {
+
+class Section : public std::enable_shared_from_this<Section> {
 public:
     explicit Section(ScheduleManager* manager) : manager(manager){
     }
 
     void processLine(const std::string& line);
 
-    void closeCurrentSubSection(){
-        currentSubSection.reset();
-        currentSubSectionID = "";
+    void closeSection(const std::string& sectionKey){
+        if(!currentSubSection){
+            throw std::runtime_error("Couldn't close " + sectionKey + " - not in the tree");
+        }
+        if(currentSubSectionID == sectionKey){
+            currentSubSection.reset();
+            currentSubSectionID = "";
+        } else {
+            return currentSubSection->closeSection(sectionKey);
+        }
     }
 
     void openSection(const std::string& sectionKey);
+
+    void setParent(std::shared_ptr<Section> section) {
+        _parentSection = section;
+    }
+
+    virtual void applyToSubSection(std::shared_ptr<Section> subSection){
+        subSection->setParent(shared_from_this());
+    }
 
 protected:
     /**
@@ -52,9 +68,19 @@ protected:
      */
     virtual void _processLine(const std::string&) = 0;
     ScheduleManager* manager;
+    std::shared_ptr<Section>  _parentSection;
 private:
-    std::unique_ptr<Section> currentSubSection;
+    std::shared_ptr<Section> currentSubSection;
     std::string currentSubSectionID;
+};
+
+template <class ParentSection>
+class SubSection : public Section {
+    using Section::Section;
+public:
+    virtual std::shared_ptr<ParentSection> getParent(){
+        return std::dynamic_pointer_cast<ParentSection>(_parentSection);
+    }
 };
 
 
