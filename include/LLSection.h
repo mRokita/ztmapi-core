@@ -5,8 +5,12 @@
 class LLSection : public Section {
     using Section::Section;
 public:
+    std::string getCurrentLine(){
+        return _currentLine;
+    }
 private:
-    void _processLine(const std::string &string) override;
+    std::string _currentLine;
+    void _processLine(const std::string &line) override;
 };
 
 #endif //ZTMAPI_CORE_LLSECTION_H

@@ -5,13 +5,16 @@
 #include "TransparentSection.h"
 #include "KDSection.h"
 #include "LLSection.h"
+#include "WKSection.h"
 
 void Section::openSection(const std::string& sectionKey) {
     if(currentSubSection) {
         // Down to the parent section of the new sub-section
         return this->currentSubSection->openSection(sectionKey);
     }
-    if (sectionKey == "TY"){
+    if (sectionKey == "WK"){
+        currentSubSection = std::make_shared<WKSection>(this->manager);
+    } else if (sectionKey == "TY"){
         currentSubSection = std::make_shared<TYSection>(this->manager);
     } else if (sectionKey == "ZA") {
         currentSubSection = std::make_shared<ZASection>(this->manager);

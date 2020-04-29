@@ -5,7 +5,8 @@ void LLSection::_processLine(const std::string &line) {
             R"((Linia\:\s*(?<line>[\w-]+)\s*\-\s+(?<line_type>.+?)\s*$))");
     boost::smatch match;
     if(boost::u32regex_search(line, match, expLine)){
-        std::cout << match["line"] << match["line_type"] << "Active: " << manager->isLineActive(match["line"]) << std::endl;
+        _currentLine = match["line"];
+        manager->lines.emplace_back(match["line"], match["line_type"]);
     } else {
         throw CouldNotParseLineException(line);
     }

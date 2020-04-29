@@ -5,12 +5,12 @@
 
 class StopGroup {
 public:
-    std::string const id;
+    int const id;
     std::string const name;
     std::string const regionId;
     std::string const regionName;
 
-    StopGroup(std::string id, std::string name, std::string regionId, std::string regionName) : id(std::move(id)),
+    StopGroup(std::string id, std::string name, std::string regionId, std::string regionName) : id(std::stoi(id)),
         name(std::move(name)), regionId(std::move(regionId)), regionName(std::move(regionName)){}
 
     StopGroup() = default;

@@ -1,6 +1,6 @@
 #include "KDSection.h"
 #include <boost/regex.hpp>
-#include "DayType.h"
+#include "schema/DayType.h"
 
 void KDSection::_processLine(const std::string& line) {
     static const boost::u32regex expDate = boost::make_u32regex(R"((?<date>\d{4}-\d{2}-\d{2})\s+\d+$)");

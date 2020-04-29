@@ -1,6 +1,6 @@
 #include "TYSection.h"
 #include <boost/regex.hpp>
-#include "DayType.h"
+#include "schema/DayType.h"
 
 void TYSection::_processLine(const std::string& line) {
     static const boost::regex expDayType("(\\w{2})\\s+(\\S.+?)\r");

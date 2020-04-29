@@ -5,13 +5,13 @@
 
 class Stop {
 public:
-    int id;
-    int groupId;
+    int const id;
+    int const groupId;
     std::string const idInGroup;
     std::string const street;
     std::string const direction;
-    float lat;
-    float lon;
+    float const lat;
+    float const lon;
 
     static float parseCord(const std::string& id, const std::string& cordStr){
         float cord;

@@ -8,10 +8,10 @@ void ScheduleManager::processSchedule() {
     std::ifstream scheduleFile(getScheduleFileName());
 
     std::shared_ptr<MainSection> section = std::make_shared<MainSection>(this);
-    int i = 0;
-    while (std::getline(scheduleFile, line) && i < 4000000){
+    while (std::getline(scheduleFile, line)){
         boost::smatch match;
-        static const boost::regex expOpenSection(R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))");
+        static const boost::regex expOpenSection(
+                R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))");
         // match[1] * or # == OPEN or CLOSE
         // match[2] Section ID (two letters)
         if(boost::regex_search(line, match, expOpenSection)){
@@ -37,6 +37,5 @@ void ScheduleManager::processSchedule() {
             }
         }
         section->processLine(boost::locale::conv::to_utf<char>(line, "windows-1250"));
-        i++;
     }
 }

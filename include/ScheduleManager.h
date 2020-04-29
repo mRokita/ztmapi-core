@@ -9,9 +9,11 @@
 #include <curlpp/Options.hpp>
 #include <fstream>
 #include <vector>
-#include "DayType.h"
-#include "StopGroup.h"
-#include "Stop.h"
+#include "schema/DayType.h"
+#include "schema/Departures.h"
+#include "schema/StopGroup.h"
+#include "schema/Line.h"
+#include "schema/Stop.h"
 #include <map>
 
 class ScheduleManager {
@@ -21,6 +23,8 @@ public:
     std::vector<DayType> dayTypes;
     std::vector<StopGroup> stopGroups;
     std::vector<Stop> stops;
+    std::vector<Line> lines;
+    std::vector<Departure> departures;
 
     explicit ScheduleManager(tm* date){
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
@@ -41,9 +45,13 @@ public:
         this->_scheduleDate = new char[DATE_LENGTH];
         struct tm* tm = localtime(&now);
         // TODO: download for previous day if no avail for today
-        tm->tm_mday += 1;
         strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", tm);
         strftime(this->_scheduleDate, DATE_LENGTH, "%Y-%m-%d", tm);
+    }
+
+    ~ScheduleManager(){
+        delete _scheduleId;
+        delete _scheduleDate;
     }
 
 

@@ -2,15 +2,17 @@
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include "include/ScheduleManager.h"
-#include "include/DayType.h"
-#include "include/StopGroup.h"
-#include "include/Stop.h"
+#include "schema/DayType.h"
+#include "schema/StopGroup.h"
+#include "schema/Stop.h"
+#include "schema/Line.h"
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <vector>
 
 typedef std::vector<DayType> DayTypeList;
 typedef std::vector<StopGroup> StopGroupList;
 typedef std::vector<Stop> StopList;
+typedef std::vector<Line> LineList;
 
 BOOST_PYTHON_MODULE(ztmapi_core){
         namespace py = boost::python;
@@ -36,10 +38,16 @@ BOOST_PYTHON_MODULE(ztmapi_core){
             .def_readonly("lon", &Stop::lon);
     py::class_<StopList>("StopList")
             .def(py::vector_indexing_suite<StopList>());
+    py::class_<Line>("Line")
+            .def_readonly("id", &Line::id)
+            .def_readonly("type", &Line::type);
+    py::class_<LineList>("LineList")
+            .def(py::vector_indexing_suite<LineList>());
     py::class_<ScheduleManager>("ScheduleManager")
         .def("download_schedule", &ScheduleManager::downloadSchedule)
         .def_readonly("day_types", &ScheduleManager::dayTypes)
         .def_readonly("stop_groups", &ScheduleManager::stopGroups)
         .def_readonly("stops", &ScheduleManager::stops)
+        .def_readonly("lines", &ScheduleManager::lines)
         .def("process_schedule", &ScheduleManager::processSchedule);
 }
