@@ -11,6 +11,7 @@
 #include <vector>
 #include "DayType.h"
 #include "StopGroup.h"
+#include "Stop.h"
 
 
 class ScheduleManager {
@@ -18,6 +19,7 @@ public:
     const unsigned short SCHEDULE_ID_LENGTH = 7;
     std::vector<DayType> dayTypes;
     std::vector<StopGroup> stopGroups;
+    std::vector<Stop> stops;
 
     explicit ScheduleManager(tm* date){
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
@@ -36,7 +38,7 @@ public:
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
         struct tm* tm = localtime(&now);
         // TODO: download for previous day if no avail for today
-        tm->tm_mday -= 1;
+        tm->tm_mday += 1;
         strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", tm);
     }
 

@@ -9,7 +9,7 @@ void ScheduleManager::processSchedule() {
 
     MainSection section(this);
     int i = 0;
-    while (std::getline(scheduleFile, line) && i < 2000){
+    while (std::getline(scheduleFile, line) && i < 4000000){
         section.processLine(boost::locale::conv::to_utf<char>(line, "windows-1250"));
         i++;
     }

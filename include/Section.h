@@ -37,39 +37,10 @@ public:
     explicit Section(ScheduleManager* manager) : manager(manager){
     }
 
-    void processLine(const std::string& line){
-        boost::smatch match;
-        static const boost::regex expOpenSection(".*?(\\*|#)(\\w\\w)");
-        // match[1] * or # == OPEN or CLOSE
-        // match[2] Section ID (two letters)
-        if(boost::regex_search(line, match, expOpenSection)){
-            // TODO: Lower cyclomatic complexity
-            try {
-                if(match[1] == "*"){ // Open new section
-                    this->openSection(match[2]);
-                    return;
-                } else { // #, close section it is the current subsection
-                    if(match[2] == currentSubSectionID){
-                        this->closeCurrentSubSection();
-                        return;
-                    }
-                }
-            } catch (InvalidSectionException& e) {
-                // It's alright
-                std::cout << "WARNING: No implementation for section \"" << match[2] << '"' << std::endl;
-            }
-        }
-
-        if (currentSubSection){
-            currentSubSection->processLine(line);
-        } else {
-            this->_processLine(line);
-        }
-    }
+    void processLine(const std::string& line);
 
     void closeCurrentSubSection(){
         currentSubSection.reset();
-        std::cout << "CLOSE TY" << std::endl;
         currentSubSectionID = "";
     }
 
