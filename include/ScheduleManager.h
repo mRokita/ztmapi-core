@@ -10,7 +10,7 @@
 #include <fstream>
 #include <vector>
 #include "schema/DayType.h"
-#include "schema/Departures.h"
+#include "schema/Departure.h"
 #include "schema/StopGroup.h"
 #include "schema/Line.h"
 #include "schema/Stop.h"

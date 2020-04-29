@@ -18,11 +18,10 @@ void ScheduleManager::processSchedule() {
             // TODO: Lower cyclomatic complexity
             if(match["open_or_close"] == "*"){
                 try {
-                    std::cout << "OPEN: " << match["section_key"] << std::endl;
                     section->openSection(match["section_key"]);
                 } catch (InvalidSectionException& e) {
                     // It's alright
-                    std::cout << "WARNING: Skipping " << match["num_lines"] << " lines of section \"" << match["section_key"] << '"' << std::endl;
+                    std::cout << "WARNING: Skipping " << match["num_lines"] << " subsections of section \"" << match["section_key"] << '"' << std::endl;
                     std::string tag;
                     while(tag != match["section_key"]){
                         scheduleFile.ignore(std::numeric_limits<std::streamsize>::max(), scheduleFile.widen('#'));

@@ -6,6 +6,7 @@ void LLSection::_processLine(const std::string &line) {
     boost::smatch match;
     if(boost::u32regex_search(line, match, expLine)){
         _currentLine = match["line"];
+        std::cout << "Parsing line " << _currentLine << std::endl;
         manager->lines.emplace_back(match["line"], match["line_type"]);
     } else {
         throw CouldNotParseLineException(line);
