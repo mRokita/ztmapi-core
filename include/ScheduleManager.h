@@ -14,6 +14,7 @@
 #include "schema/StopGroup.h"
 #include "schema/Line.h"
 #include "schema/Stop.h"
+#include "schema/Course.h"
 #include <map>
 
 class ScheduleManager {
@@ -25,6 +26,7 @@ public:
     std::vector<Stop> stops;
     std::vector<Line> lines;
     std::vector<Departure> departures;
+    std::map<std::string, Course> courses;
 
     explicit ScheduleManager(tm* date){
         this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
@@ -94,6 +96,15 @@ public:
     void setDayType(const std::string& line, const std::string& dayType){
         _lineToDayType[line] = dayType;
     }
+
+    /**
+     * Check if course has been registered already
+     * @param courseId unique id of the course generated in WKSection::_processLine
+     */
+    bool isCourseRegistered(const std::string& courseId){
+        return courses.find(courseId) != courses.end();
+    }
+
 
     bool isLineActive(const std::string& line){
         return _lineToDayType.find(line) != _lineToDayType.end();

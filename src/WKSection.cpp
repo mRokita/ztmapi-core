@@ -8,12 +8,32 @@ void WKSection::_processLine(const std::string &line) {
     std::string currentLine = getParent()->getCurrentLine();
     if (!manager->isLineActive(currentLine)) return; // Line not active, no need to parse
     boost::smatch match;
+
     if (boost::u32regex_search(line, match, expDeparture)) {
+        std::string courseId;
+        courseId.append(manager->getScheduleDate());
+        courseId.append("_");
+        courseId.append(match["course_id"]);
+
+        if (!manager->isCourseRegistered(courseId)) {
+            manager->courses.emplace(
+                    std::piecewise_construct,
+                    std::forward_as_tuple(courseId),
+                    std::forward_as_tuple(
+                            courseId,
+                            currentLine,
+                            match["track_id"],
+                            match["course_start_hour"],
+                            match["course_start_minute"],
+                            match["day_type"]
+                    )
+            );
+        }
+
         manager->departures.emplace_back(
-                currentLine,
-                match["course_id"], match["track_id"],
-                match["course_start_hour"], match["course_start_minute"],
-                match["stop_id"], match["day_type"], match["departure_hour"],
+                courseId,
+                match["stop_id"],
+                match["departure_hour"],
                 match["departure_minute"], match["is_course_start"],
                 match["is_not_public"]
         );

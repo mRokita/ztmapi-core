@@ -6,7 +6,9 @@
 #include "schema/StopGroup.h"
 #include "schema/Stop.h"
 #include "schema/Line.h"
+#include "schema/Course.h"
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include <boost/python/suite/indexing/map_indexing_suite.hpp>
 #include <vector>
 
 typedef std::vector<DayType> DayTypeList;
@@ -14,6 +16,7 @@ typedef std::vector<StopGroup> StopGroupList;
 typedef std::vector<Stop> StopList;
 typedef std::vector<Line> LineList;
 typedef std::vector<Departure> DepartureList;
+typedef std::map<std::string, Course> CourseMap;
 
 BOOST_PYTHON_MODULE(ztmapi_core){
         namespace py = boost::python;
@@ -45,25 +48,30 @@ BOOST_PYTHON_MODULE(ztmapi_core){
     py::class_<LineList>("LineList")
             .def(py::vector_indexing_suite<LineList>());
     py::class_<Departure>("Departure")
-            .def_readonly("line_id", &Departure::lineId)
             .def_readonly("course_id", &Departure::courseId)
-            .def_readonly("track_id", &Departure::trackId)
-            .def_readonly("course_start_hour", &Departure::courseStartHour)
-            .def_readonly("course_start_minute", &Departure::courseStartMinute)
             .def_readonly("stop_id", &Departure::stopId)
-            .def_readonly("day_type", &Departure::dayType)
             .def_readonly("departure_hour", &Departure::departureHour)
             .def_readonly("departure_minute", &Departure::departureMinute)
             .def_readonly("is_course_start", &Departure::isCourseStart)
             .def_readonly("is_public", &Departure::isPublic);
     py::class_<DepartureList>("DepartureList")
             .def(py::vector_indexing_suite<DepartureList>());
+    py::class_<Course>("Course")
+            .def_readonly("id", &Course::id)
+            .def_readonly("line_id", &Course::lineId)
+            .def_readonly("track_id", &Course::trackId)
+            .def_readonly("start_hour", &Course::startHour)
+            .def_readonly("start_minute", &Course::startMinute)
+            .def_readonly("day_type", &Course::dayType);
+    py::class_<CourseMap>("CourseDict")
+            .def(py::map_indexing_suite<CourseMap>());
     py::class_<ScheduleManager>("ScheduleManager")
         .def("download_schedule", &ScheduleManager::downloadSchedule)
         .def_readonly("day_types", &ScheduleManager::dayTypes)
         .def_readonly("stop_groups", &ScheduleManager::stopGroups)
         .def_readonly("stops", &ScheduleManager::stops)
         .def_readonly("lines", &ScheduleManager::lines)
+        .def_readonly("courses", &ScheduleManager::courses)
         .def_readonly("departures", &ScheduleManager::departures)
         .def("process_schedule", &ScheduleManager::processSchedule);
 }
