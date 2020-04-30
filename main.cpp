@@ -48,6 +48,7 @@ BOOST_PYTHON_MODULE(ztmapi_core){
     py::class_<LineList>("LineList")
             .def(py::vector_indexing_suite<LineList>());
     py::class_<Departure>("Departure")
+            .def_readonly("id", &Departure::id)
             .def_readonly("course_id", &Departure::courseId)
             .def_readonly("stop_id", &Departure::stopId)
             .def_readonly("departure_hour", &Departure::departureHour)

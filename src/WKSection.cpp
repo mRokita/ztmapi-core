@@ -30,7 +30,14 @@ void WKSection::_processLine(const std::string &line) {
             );
         }
 
+        std::string departureId;
+        departureId.append(courseId);
+        departureId.append(match["stop_id"]);
+        departureId.append(match["departure_hour"]);
+        departureId.append(match["departure_minute"]);
+
         manager->departures.emplace_back(
+                departureId,
                 courseId,
                 match["stop_id"],
                 match["departure_hour"],

@@ -6,6 +6,7 @@
 
 class Departure {
 public:
+    std::string const id;
     std::string const courseId;
     int stopId;
     short departureHour;
@@ -14,6 +15,7 @@ public:
     bool isPublic;
 
     Departure(
+            const std::string &id,
             const std::string &courseId,
             const std::string &stopId,
             const std::string &departureHour,
@@ -21,6 +23,7 @@ public:
             const std::string &isCourseStart,
             const std::string &isPublic)
             :
+            id(std::move(id)),
             courseId(std::move(courseId)),
             stopId(std::stoi(stopId)),
             departureHour(boost::lexical_cast<short>(departureHour)),
