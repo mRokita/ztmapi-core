@@ -2,7 +2,7 @@ from setuptools import setup, Extension
 
 setup(
     name='ztmapi_core',
-    version='0.0.6',
+    version='0.0.7',
     description='Parsing utilities for ZTM API',
     author='Michał Rokita',
     author_email='mrokita@mrokita.pl',

@@ -10,6 +10,9 @@ void WKSection::_processLine(const std::string &line) {
     boost::smatch match;
 
     if (boost::u32regex_search(line, match, expDeparture)) {
+        if(manager->getDayType(currentLine) != match["day_type"]){
+            return;  // This course is not active today
+        }
         std::string courseId;
         courseId.append(manager->getScheduleDate());
         courseId.append("_");
