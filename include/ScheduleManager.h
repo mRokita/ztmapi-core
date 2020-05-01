@@ -15,24 +15,20 @@
 #include "schema/Line.h"
 #include "schema/Stop.h"
 #include "schema/Course.h"
+#include "boost/date_time/gregorian/gregorian.hpp"
 #include <map>
+#include <chrono>
+
+using namespace boost::gregorian;
 
 class ScheduleManager {
 public:
-    const unsigned short SCHEDULE_ID_LENGTH = 7;
-    const unsigned short DATE_LENGTH = 11;
     std::vector<DayType> dayTypes;
     std::vector<StopGroup> stopGroups;
     std::vector<Stop> stops;
     std::vector<Line> lines;
     std::vector<Departure> departures;
     std::map<std::string, Course> courses;
-
-    explicit ScheduleManager(tm* date){
-        this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
-        this->_scheduleDate = new char[DATE_LENGTH];
-        strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", date);
-    }
 
     /**
      * Set the timezone to Poland/Warsaw and apply today's date
@@ -41,19 +37,11 @@ public:
     ScheduleManager(){
         char env[] = "TZ=CET";
         putenv(env);
-        time_t now;
-        time(&now);
-        this->_scheduleId = new char[SCHEDULE_ID_LENGTH];
-        this->_scheduleDate = new char[DATE_LENGTH];
-        struct tm* tm = localtime(&now);
-        // TODO: download for previous day if no avail for today
-        strftime(this->_scheduleId, SCHEDULE_ID_LENGTH, "%y%m%d", tm);
-        strftime(this->_scheduleDate, DATE_LENGTH, "%Y-%m-%d", tm);
+        _scheduleDate = day_clock::local_day();
+        _scheduleFileDate = std::move(_scheduleDate);
     }
 
     ~ScheduleManager(){
-        delete _scheduleId;
-        delete _scheduleDate;
     }
 
 
@@ -62,15 +50,22 @@ public:
      */
     void downloadSchedule(){
         std::ofstream scheduleFile("schedule.7z", std::ios::binary);
-        if (scheduleFile.is_open()) {
+        bool downloaded=false;
+        for (int tries=0; downloaded == false; tries++) {
             std::cout << "Downloading " << getDownloadUrl() << "..." << std::endl;
             try {
                 curlpp::Cleanup myCleanup;
                 scheduleFile << curlpp::options::Url(getDownloadUrl());
                 scheduleFile.close();
+                downloaded = true;
                 extractSchedule();
             } catch (curlpp::RuntimeError &e) {
-                throw e;
+                if (tries > 7){
+                    throw e;
+                } else {
+                    std::cout << "No schedule available for this day, trying the day before..." << std::endl;
+                    _scheduleFileDate -= days(1);
+                }
             } catch (curlpp::LogicError &e) {
                 throw e;
             }
@@ -85,8 +80,23 @@ public:
     /**
      * Get schedule date in yyyy-mm-dd format
      */
-    char* getScheduleDate(){
-        return _scheduleDate;
+    std::string getScheduleDate(){
+        date_facet *df = new date_facet("%Y-%m-%d");
+        std::stringstream s;
+        s.imbue(std::locale(s.getloc(), df));
+        s << _scheduleDate;
+        return s.str();
+    }
+
+    /**
+     * Get schedule date in yyyy-mm-dd format
+     */
+    std::string getScheduleFileDate(){
+        date_facet *df = new date_facet("%y%m%d");
+        std::stringstream s;
+        s.imbue(std::locale(s.getloc(), df));
+        s << _scheduleFileDate;
+        return s.str();
     }
 
     /**
@@ -118,8 +128,8 @@ public:
     }
 
 private:
-    char* _scheduleId;
-    char* _scheduleDate;
+    date _scheduleDate;
+    date _scheduleFileDate;
     std::map<std::string, std::string> _lineToDayType;
 
     /**
@@ -128,7 +138,7 @@ private:
      */
     std::string getScheduleFileName(){
         std::string fileName("RA");
-        fileName.append(_scheduleId);
+        fileName.append(this->getScheduleFileDate());
         fileName.append(".TXT");
         return fileName;
     }
@@ -139,7 +149,7 @@ private:
      */
     std::string getDownloadUrl(){
         std::string url("ftp://rozklady.ztm.waw.pl/RA");
-        url.append(this->_scheduleId);
+        url.append(this->getScheduleFileDate());
         url.append(".7z");
         return url;
     }
