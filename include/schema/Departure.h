@@ -13,6 +13,7 @@ public:
     short departureMinute;
     bool isCourseStart;
     bool isPublic;
+    int order;
 
     Departure(
             const std::string &id,
@@ -21,7 +22,8 @@ public:
             const std::string &departureHour,
             const std::string &departureMinute,
             const std::string &isCourseStart,
-            const std::string &isPublic)
+            const std::string &isPublic,
+            const int order)
             :
             id(std::move(id)),
             courseId(std::move(courseId)),
@@ -29,7 +31,8 @@ public:
             departureHour(boost::lexical_cast<short>(departureHour)),
             departureMinute(boost::lexical_cast<short>(departureMinute)),
             isCourseStart(isCourseStart == "P"),
-            isPublic(isPublic != "B") {}
+            isPublic(isPublic != "B"),
+            order(order) {}
 
     Departure() = default;
 

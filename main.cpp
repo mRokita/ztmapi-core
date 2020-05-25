@@ -54,7 +54,8 @@ BOOST_PYTHON_MODULE(ztmapi_core){
             .def_readonly("departure_hour", &Departure::departureHour)
             .def_readonly("departure_minute", &Departure::departureMinute)
             .def_readonly("is_course_start", &Departure::isCourseStart)
-            .def_readonly("is_public", &Departure::isPublic);
+            .def_readonly("is_public", &Departure::isPublic)
+            .def_readonly("order", &Departure::order);
     py::class_<DepartureList>("DepartureList")
             .def(py::vector_indexing_suite<DepartureList>());
     py::class_<Course>("Course")
