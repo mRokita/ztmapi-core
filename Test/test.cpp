@@ -278,15 +278,14 @@ TEST_CASE("Sekcja PR", "[PR]")
 	REQUIRE(schedManager->stops[6].lon == static_cast<float>(20.989269));
 
 	line = "         503458   1      Ul./Pl.: Powstañców Œl¹skich,              Kier.: ******************************    Y=yyy.yyyyyyyy   X=xxx.xxxxxxxx   Pu=?";
-	//PRsection->processLine(boostEncode(line));
-	//REQUIRE(schedManager->stops[6].id == 100503);
-	//REQUIRE(schedManager->stops[6].groupId == 1005);
-	//REQUIRE(schedManager->stops[6].idInGroup == "03");
-	//REQUIRE(schedManager->stops[6].street == boostEncode("Jagielloñska"));
-	//REQUIRE(schedManager->stops[6].direction == boostEncode("Ratuszowa-ZOO"));
-	//REQUIRE(schedManager->stops[6].lat == static_cast<float>(52.259193));
-	//REQUIRE(schedManager->stops[6].lon == static_cast<float>(21.025233));
-
+	PRsection->processLine(boostEncode(line));
+	REQUIRE(schedManager->stops[7].id == 503458);
+	REQUIRE(schedManager->stops[7].groupId == 5034);
+	REQUIRE(schedManager->stops[7].idInGroup == "58");
+	REQUIRE(schedManager->stops[7].street == boostEncode("Powstañców Œl¹skich"));
+	REQUIRE(schedManager->stops[7].direction == boostEncode("******************************"));
+	REQUIRE(schedManager->stops[7].lat == static_cast<float>(0));
+	REQUIRE(schedManager->stops[7].lon == static_cast<float>(0));
 }
 
 
@@ -332,6 +331,5 @@ TEST_CASE("Sekcja WK", "[WK]")
 	REQUIRE(schedManager->departures[3].stopId == 400507);
 	REQUIRE(schedManager->departures[3].departureHour == 4);
 	REQUIRE(schedManager->departures[3].departureMinute == 57);
-
 }
 
