@@ -1,8 +1,6 @@
 #define CATCH_CONFIG_MAIN
 
-#include <vector>
 #include "include/ScheduleManager.h"
-#include "include/Section.h"
 #include "include/TYSection.h"
 #include "include/KDSection.h"
 #include "include/ZASection.h"
@@ -51,11 +49,12 @@ TEST_CASE("Sekcja KA", "[KA]")
 
 	// Tutaj trzeba zmieniæ na datê dzisiejsz¹ lub daæ w SchedManager jakis testMode
 	// Gdzie wstawia wybran¹ date
-	KDsection->processLine("   2020-03-22  293");
+
+	KDsection->processLine("   " + schedManager->getScheduleDate() + "  293");
 
 	KDsection->processLine("       10   DS");
 	REQUIRE(schedManager->getDayType("10") == "DS");
-	
+
 	KDsection->processLine("      L-1   DS");
 	REQUIRE(schedManager->getDayType("L-1") == "DS");
 
@@ -113,14 +112,14 @@ TEST_CASE("Sekcja ZA", "[ZA]")
 
 	line = "   1192   3 Maja,                             LG  LEGIONOWO";
 	ZAsection->processLine(boostEncode(line));
-		REQUIRE(schedManager->stopGroups[2].id == 1192);
+	REQUIRE(schedManager->stopGroups[2].id == 1192);
 	REQUIRE(schedManager->stopGroups[2].name == boostEncode("3 Maja"));
 	REQUIRE(schedManager->stopGroups[2].regionId == "LG");
 	REQUIRE(schedManager->stopGroups[2].regionName == boostEncode("LEGIONOWO"));
 
 	line = "   2145   Abrahama,                           --  WARSZAWA";
 	ZAsection->processLine(boostEncode(line));
-		REQUIRE(schedManager->stopGroups[3].id == 2145);
+	REQUIRE(schedManager->stopGroups[3].id == 2145);
 	REQUIRE(schedManager->stopGroups[3].name == boostEncode("Abrahama"));
 	REQUIRE(schedManager->stopGroups[3].regionId == "--");
 	REQUIRE(schedManager->stopGroups[3].regionName == boostEncode("WARSZAWA"));
@@ -197,8 +196,8 @@ TEST_CASE("Sekcja ZA", "[ZA]")
 
 
 
-//
-//	schedManager;
+	//
+	//	schedManager;
 }
 
 TEST_CASE("Sekcja PR", "[PR]")
@@ -303,35 +302,33 @@ TEST_CASE("Sekcja WK", "[WK]")
 	line = "   Linia:   1  - LINIA TRAMWAJOWA";
 	LLsection->processLine(boostEncode(line));
 
-	std::cout << LLsection->getCurrentLine();
-
 	std::shared_ptr<WKSection> WKsection = std::make_shared<WKSection>(schedManager);
 	WKsection->setParent(LLsection);
 
 	line = "         TD-3ANNO/DP/04.13  324004 DP  4.16  B";
 	WKsection->processLine(line);
-	REQUIRE(schedManager->departures[0].courseId == "2020-03-22_1_TD-3ANNO/DP/04.13");
+	REQUIRE(schedManager->departures[0].courseId == schedManager->getScheduleDate() + "_1_TD-3ANNO/DP/04.13");
 	REQUIRE(schedManager->departures[0].stopId == 324004);
 	REQUIRE(schedManager->departures[0].departureHour == 4);
 	REQUIRE(schedManager->departures[0].departureMinute == 16);
 
 	line = "         TD-3ANNO/DP/04.13  400201 DP  4.38   ";
 	WKsection->processLine(line);
-	REQUIRE(schedManager->departures[1].courseId == "2020-03-22_1_TD-3ANNO/DP/04.13");
+	REQUIRE(schedManager->departures[1].courseId == schedManager->getScheduleDate() + "_1_TD-3ANNO/DP/04.13");
 	REQUIRE(schedManager->departures[1].stopId == 400201);
 	REQUIRE(schedManager->departures[1].departureHour == 4);
 	REQUIRE(schedManager->departures[1].departureMinute == 38);
 
 	line = "         TD-3ANNO/DP/04.13  108703 DP  5.15  P";
 	WKsection->processLine(line);
-	REQUIRE(schedManager->departures[2].courseId == "2020-03-22_1_TD-3ANNO/DP/04.13");
+	REQUIRE(schedManager->departures[2].courseId == schedManager->getScheduleDate() + "_1_TD-3ANNO/DP/04.13");
 	REQUIRE(schedManager->departures[2].stopId == 108703);
 	REQUIRE(schedManager->departures[2].departureHour == 5);
 	REQUIRE(schedManager->departures[2].departureMinute == 15);
 
 	line = "         TD-3BAN/DP/04.31_  400507 DP  4.57   ";
 	WKsection->processLine(line);
-	REQUIRE(schedManager->departures[3].courseId == "2020-03-22_1_TD-3BAN/DP/04.31_");
+	REQUIRE(schedManager->departures[3].courseId == schedManager->getScheduleDate() + "_1_TD-3BAN/DP/04.31_");
 	REQUIRE(schedManager->departures[3].stopId == 400507);
 	REQUIRE(schedManager->departures[3].departureHour == 4);
 	REQUIRE(schedManager->departures[3].departureMinute == 57);
