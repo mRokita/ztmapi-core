@@ -2,7 +2,7 @@
 #include "./schema/Departure.h"
 
 void WKSection::_processLine(const std::string &line) {
-    static const boost::u32regex expDeparture = boost::make_u32regex(
+    boost::u32regex expDeparture = boost::make_u32regex(
             R"((?<course_id>(?<track_id>[\w\d-]+)\/\w+\/(?<course_start_hour>\d{2})\.(?<course_start_minute>\d{2})_*)\s+(?<stop_id>\d{6})\s+(?<day_type>\w{2})\s+(?<departure_hour>\d{1,2})\.(?<departure_minute>\d{2})\s*(?<is_course_start>P?)\s*(?<is_not_public>B)?\s*$)"
     );
     static int departureOrder = 0;
