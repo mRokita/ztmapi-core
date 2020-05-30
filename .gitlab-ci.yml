@@ -13,4 +13,4 @@ test:
     - export UBUNTU=1
     - cmake ..
     - make
-    - ./run_tests
+    - ./run_tests -s
