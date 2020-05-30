@@ -28,4 +28,4 @@ install(CODE "execute_process(COMMAND pip install .)")
 
 SET(CMAKE_EXE_LINKER_FLAGS -licuuc)
 
-add_executable(test tests/test.cpp ${ztmapi_SRC})
+add_executable(run_tests tests/test.cpp ${ztmapi_SRC})

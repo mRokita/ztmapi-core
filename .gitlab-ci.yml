@@ -12,4 +12,4 @@ test:
     - export UBUNTU=1
     - cmake ..
     - make
-    - ./test
+    - ./run_tests
