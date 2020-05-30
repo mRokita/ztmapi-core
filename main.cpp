@@ -68,6 +68,8 @@ BOOST_PYTHON_MODULE(ztmapi_core){
     py::class_<CourseMap>("CourseDict")
             .def(py::map_indexing_suite<CourseMap>());
     py::class_<ScheduleManager>("ScheduleManager")
+        .def(py::init<>())
+        .def(py::init<int, int, int>())
         .def("download_schedule", &ScheduleManager::downloadSchedule)
         .def_readonly("day_types", &ScheduleManager::dayTypes)
         .def_readonly("stop_groups", &ScheduleManager::stopGroups)

@@ -38,7 +38,15 @@ public:
         char env[] = "TZ=CET";
         putenv(env);
         _scheduleDate = day_clock::local_day();
-        _scheduleFileDate = std::move(_scheduleDate);
+        _scheduleFileDate = day_clock::local_day();
+    }
+
+    ScheduleManager(int year, int month, int day){
+        char env[] = "TZ=CET";
+        putenv(env);
+        _scheduleDate = date(year, month, day);
+        _scheduleFileDate =  date(year, month, day);
+
     }
 
     ~ScheduleManager(){

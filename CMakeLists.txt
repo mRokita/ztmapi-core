@@ -21,7 +21,11 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 file(GLOB ztmapi_SRC "src/*")
 
-include_directories(${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} include/)
+include_directories(${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} include/ tests/catch2)
 link_libraries(curl curlpp ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
 python_add_module(ztmapi_core main.cpp ${ztmapi_SRC})
 install(CODE "execute_process(COMMAND pip install .)")
+
+SET(CMAKE_EXE_LINKER_FLAGS -licuuc)
+
+add_executable(test tests/test.cpp ${ztmapi_SRC})
