@@ -2,7 +2,7 @@ stages:
   - test
 test:
   stage: test
-  image: ubuntu:bionic
+  image: ubuntu:focal
   script:
     - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libboost-regex-dev libboost-date-time-dev libboost-locale-dev libcurl4-openssl-dev cmake p7zip-full virtualenv libicu-dev
     - mkdir build
