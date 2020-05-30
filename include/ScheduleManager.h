@@ -46,7 +46,6 @@ public:
         putenv(env);
         _scheduleDate = date(year, month, day);
         _scheduleFileDate =  date(year, month, day);
-
     }
 
     ~ScheduleManager(){
