@@ -28,8 +28,4 @@ install(CODE "execute_process(COMMAND pip install .)")
 
 
 add_executable(run_tests tests/test.cpp ${ztmapi_SRC})
-if($ENV{UBUNTU})
-    target_link_libraries(run_tests icu-uc)
-else()
-    target_link_libraries(run_tests icuuc)
-endif()
+target_link_libraries(run_tests icuuc)

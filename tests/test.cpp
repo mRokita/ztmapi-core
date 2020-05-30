@@ -84,7 +84,7 @@ TEST_CASE("Sekcja KD", "[KD]")
 	KDsection->processLine("      N44   NS");
 	REQUIRE(schedManager->getDayType("N44") == "NO");
 
-
+    delete schedManager;
 }
 
 
@@ -194,10 +194,7 @@ TEST_CASE("Sekcja ZA", "[ZA]")
 	REQUIRE(schedManager->stopGroups[13].regionId == "--");
 	REQUIRE(schedManager->stopGroups[13].regionName == boostEncode("WARSZAWA"));
 
-
-
-	//
-	//	schedManager;
+	delete schedManager;
 }
 
 TEST_CASE("Sekcja PR", "[PR]")
@@ -302,6 +299,8 @@ TEST_CASE("Sekcja PR", "[PR]")
 	REQUIRE(schedManager->stops[7].direction == boostEncode("******************************"));
 	REQUIRE(schedManager->stops[7].lat == static_cast<float>(0));
 	REQUIRE(schedManager->stops[7].lon == static_cast<float>(0));
+
+	delete schedManager;
 }
 
 
@@ -356,5 +355,7 @@ TEST_CASE("Sekcja WK", "[WK]")
 	REQUIRE(schedManager->departures[3].stopId == 400507);
 	REQUIRE(schedManager->departures[3].departureHour == 4);
 	REQUIRE(schedManager->departures[3].departureMinute == 57);
+
+	delete schedManager;
 }
 
