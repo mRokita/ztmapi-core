@@ -5,11 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 find_package(PythonInterp 3 REQUIRED)
 
-if($ENV{UBUNTU})
-    set(BOOST_PYTHONLIB python-py${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-else()
-    set(BOOST_PYTHONLIB python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-endif()
+set(BOOST_PYTHONLIB python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
 find_package(Boost COMPONENTS regex locale ${BOOST_PYTHONLIB} REQUIRED)
 find_package(PythonLibs 3 REQUIRED)
 pkg_check_modules(CURLPP REQUIRED curlpp)
