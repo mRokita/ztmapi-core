@@ -26,6 +26,6 @@ link_libraries(curl curlpp ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
 python_add_module(ztmapi_core main.cpp ${ztmapi_SRC})
 install(CODE "execute_process(COMMAND pip install .)")
 
-SET(CMAKE_EXE_LINKER_FLAGS -licuuc)
 
 add_executable(run_tests tests/test.cpp ${ztmapi_SRC})
+target_link_libraries(run_tests icuuc)
