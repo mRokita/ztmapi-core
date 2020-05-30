@@ -41,51 +41,51 @@ TEST_CASE("Sekcja TY", "[TY]")
 
 }
 
-//TEST_CASE("Sekcja KD", "[KD]")
-//{
-//	ScheduleManager schedManager;
-//
-//	std::shared_ptr<KDSection> KDsection = std::make_shared<KDSection>(&schedManager);
-//
-//	// Tutaj trzeba zmieni� na dat� dzisiejsz� lub da� w SchedManager jakis testMode
-//	// Gdzie wstawia wybran� date
-//
-//	KDsection->processLine("   " + schedManager.getScheduleDate() + "  293");
-//
-//	KDsection->processLine("       10   DS");
-//	REQUIRE(schedManager.getDayType("10") == "DS");
-//
-//	KDsection->processLine("      L-1   DS");
-//	REQUIRE(schedManager.getDayType("L-1") == "DS");
-//
-//	KDsection->processLine("      L11   DS");
-//	REQUIRE(schedManager.getDayType("L11") == "DS");
-//
-//	KDsection->processLine("      N02   NS");
-//	REQUIRE(schedManager.getDayType("N02") == "NS");
-//
-//	KDsection->processLine("      N44   NO");
-//	REQUIRE(schedManager.getDayType("N44") == "NO");
-//
-//	KDsection->processLine("       R7   DS");
-//	REQUIRE(schedManager.getDayType("R7") == "DS");
-//
-//	KDsection->processLine("       RL   DS");
-//	REQUIRE(schedManager.getDayType("RL") == "DS");
-//
-//	KDsection->processLine("       RL   DS");
-//	REQUIRE(schedManager.getDayType("RL") == "DS");
-//
-//	KDsection->processLine("      WKD   DS");
-//	REQUIRE(schedManager.getDayType("RL") == "DS");
-//
-//
-//	KDsection->processLine("   2020-03-23  293");
-//	KDsection->processLine("      N44   NS");
-//	REQUIRE(schedManager.getDayType("N44") == "NO");
-//
-//
-//}
+TEST_CASE("Sekcja KD", "[KD]")
+{
+	ScheduleManager schedManager;
+
+	std::shared_ptr<KDSection> KDsection = std::make_shared<KDSection>(&schedManager);
+
+	// Tutaj trzeba zmieni� na dat� dzisiejsz� lub da� w SchedManager jakis testMode
+	// Gdzie wstawia wybran� date
+
+	KDsection->processLine("   " + schedManager.getScheduleDate() + "  293");
+
+	KDsection->processLine("       10   DS");
+	REQUIRE(schedManager.getDayType("10") == "DS");
+
+	KDsection->processLine("      L-1   DS");
+	REQUIRE(schedManager.getDayType("L-1") == "DS");
+
+	KDsection->processLine("      L11   DS");
+	REQUIRE(schedManager.getDayType("L11") == "DS");
+
+	KDsection->processLine("      N02   NS");
+	REQUIRE(schedManager.getDayType("N02") == "NS");
+
+	KDsection->processLine("      N44   NO");
+	REQUIRE(schedManager.getDayType("N44") == "NO");
+
+	KDsection->processLine("       R7   DS");
+	REQUIRE(schedManager.getDayType("R7") == "DS");
+
+	KDsection->processLine("       RL   DS");
+	REQUIRE(schedManager.getDayType("RL") == "DS");
+
+	KDsection->processLine("       RL   DS");
+	REQUIRE(schedManager.getDayType("RL") == "DS");
+
+	KDsection->processLine("      WKD   DS");
+	REQUIRE(schedManager.getDayType("RL") == "DS");
+
+
+	KDsection->processLine("   2020-03-23  293");
+	KDsection->processLine("      N44   NS");
+	REQUIRE(schedManager.getDayType("N44") == "NO");
+
+
+}
 
 
 TEST_CASE("Sekcja ZA", "[ZA]")
