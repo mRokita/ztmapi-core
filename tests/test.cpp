@@ -20,7 +20,7 @@ TEST_CASE("Sekcja TY", "[TY]")
 {
 	ScheduleManager schedManager;
 
-	std::shared_ptr<TYSection> TYsection = std::make_unique<TYSection>(&schedManager);
+	std::shared_ptr<TYSection> TYsection = std::make_shared<TYSection>(&schedManager);
 
 	TYsection->processLine("   D1   PONIEDZIA�EK\r");
 	REQUIRE(schedManager.dayTypes[0].id == "D1");
@@ -45,7 +45,7 @@ TEST_CASE("Sekcja TY", "[TY]")
 //{
 //	ScheduleManager schedManager;
 //
-//	std::shared_ptr<KDSection> KDsection = std::make_unique<KDSection>(&schedManager);
+//	std::shared_ptr<KDSection> KDsection = std::make_shared<KDSection>(&schedManager);
 //
 //	// Tutaj trzeba zmieni� na dat� dzisiejsz� lub da� w SchedManager jakis testMode
 //	// Gdzie wstawia wybran� date
@@ -92,7 +92,7 @@ TEST_CASE("Sekcja ZA", "[ZA]")
 {
 	ScheduleManager schedManager;
 
-	std::shared_ptr<ZASection> ZAsection = std::make_unique<ZASection>(&schedManager);
+	std::shared_ptr<ZASection> ZAsection = std::make_shared<ZASection>(&schedManager);
 
 	std::string line;
 
@@ -201,7 +201,7 @@ TEST_CASE("Sekcja PR", "[PR]")
 {
 	ScheduleManager schedManager;
 
-	std::shared_ptr<PRSection> PRsection = std::make_unique<PRSection>(&schedManager);
+	std::shared_ptr<PRSection> PRsection = std::make_shared<PRSection>(&schedManager);
 	std::string line;
 
 	line = "         100101   2      Ul./Pl.: Targowa,                          Kier.: al.Zieleniecka,                   Y= 52.248455     X= 21.044827     Pu=0";
@@ -308,16 +308,16 @@ TEST_CASE("Sekcja WK", "[WK]")
 {
 	ScheduleManager schedManager{2020, 5, 30};
 
-	std::shared_ptr<KDSection> KDsection = std::make_unique<KDSection>(&schedManager);
+	std::shared_ptr<KDSection> KDsection = std::make_shared<KDSection>(&schedManager);
     KDsection->processLine("        2020-05-30  1");
 	KDsection->processLine("        1   DP");
 
-	std::shared_ptr<LLSection> LLsection = std::make_unique<LLSection>(&schedManager);
+	std::shared_ptr<LLSection> LLsection = std::make_shared<LLSection>(&schedManager);
 	std::string line;
 	line = "   Linia:   1  - LINIA TRAMWAJOWA";
 	LLsection->processLine(boostEncode(line));
 
-	std::shared_ptr<WKSection> WKsection = std::make_unique<WKSection>(&schedManager);
+	std::shared_ptr<WKSection> WKsection = std::make_shared<WKSection>(&schedManager);
 	WKsection->setParent(LLsection);
 
 	line = "         TD-3ANNO/DP/04.13  324004 DP  4.16  B";
