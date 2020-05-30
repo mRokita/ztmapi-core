@@ -5,7 +5,7 @@ test:
   image: ubuntu:focal
   script:
     - export DEBIAN_FRONTEND=noninteractive
-    - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libboost-regex-dev libboost-date-time-dev libboost-locale-dev libcurl4-openssl-dev cmake p7zip-full virtualenv libicu-dev
+    - apt update && apt install -y build-essential libboost-dev libcurlpp-dev libboost-python-dev libboost-regex-dev libboost-date-time-dev libboost-locale-dev libcurl4-openssl-dev cmake p7zip-full virtualenv libicu-dev pkg-config
     - mkdir build
     - cd build
     - virtualenv venv -p python3
