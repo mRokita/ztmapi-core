@@ -1,7 +1,7 @@
 #include "LLSection.h"
 
 void LLSection::_processLine(const std::string &line) {
-    boost::u32regex expLine = boost::make_u32regex(
+    static const boost::u32regex expLine = boost::make_u32regex(
             R"((Linia\:\s*(?<line>[\w-]+)\s*\-\s+(?<line_type>.+?)\s*$))");
     boost::smatch match;
     if(boost::u32regex_search(line, match, expLine)){
