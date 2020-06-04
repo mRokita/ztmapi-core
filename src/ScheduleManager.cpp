@@ -2,8 +2,6 @@
 #include <boost/locale.hpp>
 
 void ScheduleManager::processSchedule() {
-    // TODO: Throw an exception if no schedule has been downloaded yet
-
     std::string line;
     std::ifstream scheduleFile(getScheduleFileName());
 
@@ -11,16 +9,15 @@ void ScheduleManager::processSchedule() {
     while (std::getline(scheduleFile, line)){
         boost::smatch match;
         static const boost::regex expOpenSection(
-                R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))");
-        // match[1] * or # == OPEN or CLOSE
-        // match[2] Section ID (two letters)
+                R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))"); /**< Wyrażenie naturalne pobierające początek lub koniec sekcji. */
+		// * - otwarcie sekcji
+		// # - zamknięcie sekcji
         if(boost::regex_search(line, match, expOpenSection)){
-            // TODO: Lower cyclomatic complexity
             if(match["open_or_close"] == "*"){
                 try {
                     section->openSection(match["section_key"]);
                 } catch (InvalidSectionException& e) {
-                    // It's alright
+                    // Część sekcji jest pomijanych celem szybszego parsowania pliku
                     std::cout << "WARNING: Skipping " << match["num_lines"] << " subsections of section \"" << match["section_key"] << '"' << std::endl;
                     std::string tag;
                     while(tag != match["section_key"]){

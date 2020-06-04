@@ -40,6 +40,10 @@ public:
 
     void processLine(const std::string& line);
 
+	/**
+	 * Zamyka daną sekcję.
+	 * @param sectionKey Klucz zamykanej sekcji
+	 */
     void closeSection(const std::string& sectionKey){
         if(!currentSubSection){
             throw std::runtime_error("Couldn't close " + sectionKey + " - not in the tree");
@@ -52,26 +56,39 @@ public:
         }
     }
 
+	/**
+	 * Otwiera daną sekcję
+	 * @param sectionKey Klucz otwieranej sekcji
+	 */
     void openSection(const std::string& sectionKey);
+
 
     void setParent(std::shared_ptr<Section> section) {
         _parentSection = section;
     }
 
+	/**
+	 * Ustawia rodzica dla podsekcji.
+	 * @param subSection Dla jakiej sekcji podrzędnej ma być ustawione
+	 */
     virtual void applyToSubSection(std::shared_ptr<Section> subSection){
         subSection->setParent(shared_from_this());
     }
 
 protected:
-    /**
-     * This function should perform analysis of section body
-     */
-    virtual void _processLine(const std::string&) = 0;
+
     ScheduleManager* manager;
     std::shared_ptr<Section>  _parentSection;
+	
+	/**
+	 * Parsowanie pojedynczej linii pliku
+	 * Funkcja wywoływana dla każdej linii parsowanego pliku. Metoda wirtualna, nadpisywana przez każdą sekcję
+	 * @param Linia pliku 
+	 */
+    virtual void _processLine(const std::string&) = 0;
 private:
     std::shared_ptr<Section> currentSubSection;
-    std::string currentSubSectionID;
+    std::string currentSubSectionID; /**< Aktualnie parsowana sekcja podrzędna. */
 };
 
 template <class ParentSection>

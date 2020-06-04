@@ -9,7 +9,7 @@
 
 void Section::openSection(const std::string& sectionKey) {
     if(currentSubSection) {
-        // Down to the parent section of the new sub-section
+        // Otwieramy sekcje podrzędną dla aktualnej
         return this->currentSubSection->openSection(sectionKey);
     }
     if (sectionKey == "WK"){
@@ -25,7 +25,6 @@ void Section::openSection(const std::string& sectionKey) {
     } else if (sectionKey == "KD") {
         currentSubSection = std::make_shared<KDSection>(this->manager);
     } else if (sectionKey == "ZP") {
-        // Parent of PR, no need to parse body.
         currentSubSection = std::make_shared<TransparentSection>(this->manager);
     } else {
         throw InvalidSectionException("No implementation for sectionKey");

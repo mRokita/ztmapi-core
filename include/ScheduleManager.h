@@ -31,8 +31,7 @@ public:
     std::map<std::string, Course> courses;
 
     /**
-     * Set the timezone to Poland/Warsaw and apply today's date
-     * @return ScheduleManager with _scheduleId for today
+	 * Ustawia strefę czasową na Polska/Warszawa i dzisiejszą datę.
      */
     ScheduleManager(){
         char env[] = "TZ=CET";
@@ -51,9 +50,9 @@ public:
     ~ScheduleManager(){
     }
 
-
     /**
-     * Download the compressed schedule to schedule.7z, then extract the schedule file.
+	 * Pobiernie plików rozkładowych i dekompresja.
+	 * Pobiera pliki rozkładowe z zewnętrznego API w formacie 7z, a następnie je dekompresuje.
      */
     void downloadSchedule(){
         std::ofstream scheduleFile("schedule.7z", std::ios::binary);
@@ -80,12 +79,13 @@ public:
     }
 
     /**
-     * Process the downloaded schedule
+     * Proces parsowania pliku rozkładowego.
      */
     void processSchedule();
 
     /**
-     * Get schedule date in yyyy-mm-dd format
+	 * Zwraca datę rozkładu w formacie yyyy-mm-dd.
+	 * @return Data
      */
     std::string getScheduleDate(){
         date_facet *df = new date_facet("%Y-%m-%d");
@@ -96,7 +96,8 @@ public:
     }
 
     /**
-     * Get schedule date in yyyy-mm-dd format
+     * Zwraca datę pliku rozkładoweg w formacie yyyy-mm-dd.
+	 * @return Data
      */
     std::string getScheduleFileDate(){
         date_facet *df = new date_facet("%y%m%d");
@@ -107,28 +108,38 @@ public:
     }
 
     /**
-     * Should be only used inside KDSection::_processLine()
-     * Assigns a day type to a line.
+	 * Przypisuje typ dnia do danej linii.
+	 * Używane jedynie w sekcji KD, która zawiera typ dnia każdej linii.
+	 * @param line Wybrana linia
+	 * @param dayType Typ dnia
      */
     void setDayType(const std::string& line, const std::string& dayType){
         _lineToDayType[line] = dayType;
     }
 
     /**
-     * Check if course has been registered already
-     * @param courseId unique id of the course generated in WKSection::_processLine
+	 * Sprawdzenie czy kurs został już zarejestrowany
+	 * @param courseId Unikalne id kursu generowane z sekcji WK
+     * @return Czy kurs już zarejestrowany
      */
     bool isCourseRegistered(const std::string& courseId){
         return courses.find(courseId) != courses.end();
     }
 
 
+	/**
+	 * Sprawdzenie czy dana linia kursuje w aktualnym dniu.
+	 * @param line Wybrana linia
+	 * @return Czy dana linia kursuje
+	 */
     bool isLineActive(const std::string& line){
         return _lineToDayType.find(line) != _lineToDayType.end();
     }
 
     /**
-     * Get line's day type for today
+	 * Pobranie typu dnia dla wybranej linii.
+     * @oaram line Wybrana linia
+	 * @return Typ dnia
      */
     std::string getDayType(const std::string& line){
         return _lineToDayType[line];
@@ -140,8 +151,9 @@ private:
     std::map<std::string, std::string> _lineToDayType;
 
     /**
-     * Get schedule file name in "RA%y%m%d.TXT" format
-     * @return schedule file name
+	 * Wygenerowanie nazwy pliku rozkładowego dla danego dnia.
+     * Nazwa pliku w formacie "RA%y%m%d.TXT".
+     * @return Nazwa pliku rozkładowego
      */
     std::string getScheduleFileName(){
         std::string fileName("RA");
@@ -151,8 +163,9 @@ private:
     }
 
     /**
-     * Get the download url for compressed schedule (RA%y%m%d.TXT)
-     * @return download url
+	 * Wygenerowanie linku URL do pobrania pliku rozkładowego na dany dzień.
+     * (RA%y%m%d.TXT)
+     * @return Link URL
      */
     std::string getDownloadUrl(){
         std::string url("ftp://rozklady.ztm.waw.pl/RA");
@@ -162,8 +175,8 @@ private:
     }
 
     /**
-     * Extract the schedule file from schedule.7z
-     * Currently the best option to do that on Linux is using a system call.
+     * Dekompresja i rozpakowanie pliku 7z
+	 * Wykorzystuje wywołanie systemowe LINUX
      */
     static void extractSchedule(){
         system("7z e schedule.7z -y");
