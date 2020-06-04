@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #ifndef ZTMAPI_CORE_LLSECTION_H
 #define ZTMAPI_CORE_LLSECTION_H
 #include "Section.h"

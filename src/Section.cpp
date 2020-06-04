@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "Section.h"
 #include "PRSection.h"
 #include "ZASection.h"

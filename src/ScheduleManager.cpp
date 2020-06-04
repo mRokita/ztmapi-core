@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "ScheduleManager.h"
 #include <boost/locale.hpp>
 

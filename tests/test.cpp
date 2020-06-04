@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #define CATCH_CONFIG_MAIN
 
 #include "../include/ScheduleManager.h"

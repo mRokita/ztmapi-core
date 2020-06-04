@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include <ctime>
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>

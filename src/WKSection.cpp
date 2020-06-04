@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "WKSection.h"
 #include "./schema/Departure.h"
 

@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "LLSection.h"
 
 void LLSection::_processLine(const std::string &line) {

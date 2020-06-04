@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "TYSection.h"
 #include <boost/regex.hpp>
 #include "schema/DayType.h"

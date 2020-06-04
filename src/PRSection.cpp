@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #include "PRSection.h"
 
 void PRSection::_processLine(const std::string &line) {

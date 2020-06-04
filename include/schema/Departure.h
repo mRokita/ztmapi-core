@@ -1,3 +1,8 @@
+//
+// Autorzy:
+// Michał Rokita, Adamski Maciej
+//
+
 #ifndef ZTMAPI_CORE_DEPARTURE_H
 #define ZTMAPI_CORE_DEPARTURE_H
 

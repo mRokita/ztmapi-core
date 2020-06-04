@@ -1,3 +1,8 @@
+#
+# Autorzy:
+# Michał Rokita, Adamski Maciej
+#
+
 from setuptools import setup, Extension
 from sys import version_info
 
