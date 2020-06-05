@@ -13,7 +13,8 @@ void WKSection::_processLine(const std::string &line) {
     static int departureOrder = 0;
     static std::string lastCourseId = "__course__";
     std::string currentLine = getParent()->getCurrentLine();
-    if (!manager->isLineActive(currentLine)) return; // Jeśli linia nieaktywna, nie musimy jej parsować
+    if (!manager->isLineActive(currentLine))
+        return; // Jeśli linia nieaktywna, nie musimy jej parsować
     boost::smatch match;
 
     if (boost::u32regex_search(line, match, expDeparture)) {
