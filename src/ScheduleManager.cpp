@@ -14,7 +14,7 @@ void ScheduleManager::processSchedule() {
     while (std::getline(scheduleFile, line)){
         boost::smatch match;
         static const boost::regex expOpenSection(
-                R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))"); /**< Wyrażenie naturalne pobierające początek lub koniec sekcji. */
+                R"(\s*(?<open_or_close>\*|#)(?<section_key>\w\w)\s*(?<num_lines>\d*))"); /**< Wyrażenie regularne pobierające początek lub koniec sekcji. */
 		// * - otwarcie sekcji
 		// # - zamknięcie sekcji
         if(boost::regex_search(line, match, expOpenSection)){

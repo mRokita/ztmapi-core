@@ -7,7 +7,7 @@
 
 void LLSection::_processLine(const std::string &line) {
     static const boost::u32regex expLine = boost::make_u32regex(
-            R"((Linia\:\s*(?<line>[\w-]+)\s*\-\s+(?<line_type>.+?)\s*$))"); /**< Wyrażenie naturalne dla sekcji LL */
+            R"((Linia\:\s*(?<line>[\w-]+)\s*\-\s+(?<line_type>.+?)\s*$))"); /**< Wyrażenie regularne dla sekcji LL */
     boost::smatch match;
     if(boost::u32regex_search(line, match, expLine)){
         _currentLine = match["line"]; /**< Jaka linia w sekcji LL będzie parsowana */
