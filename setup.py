@@ -10,7 +10,7 @@ BOOST_MINOR_VERSION = str(min(8, version_info[1]))
 
 setup(
     name='ztmapi_core',
-    version='0.0.10',
+    version='0.0.11',
     description='Parsing utilities for ZTM API',
     author='Michał Rokita',
     author_email='mrokita@mrokita.pl',
