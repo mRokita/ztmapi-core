@@ -221,6 +221,7 @@ TEST_CASE("Sekcja PR", "[PR]")
 	REQUIRE(schedManager.stops[0].lat == static_cast<float>(52.248455));
 	REQUIRE(schedManager.stops[0].lon == static_cast<float>(21.044827));
 
+
 	line = "         100102   3      Ul./Pl.: Targowa,                          Kier.: Z�bkowska,                        Y= 52.249078     X= 21.044443     Pu=0";
 	PRsection->processLine(boostEncode(line));
 
@@ -305,7 +306,16 @@ TEST_CASE("Sekcja PR", "[PR]")
 	REQUIRE(schedManager.stops[7].lat == static_cast<float>(0));
 	REQUIRE(schedManager.stops[7].lon == static_cast<float>(0));
 
-
+	line = "         284702   1      Ul./Pl.:         <<Nowa Trasa>>,           Kier.: ******************************    Y= 52.242145     X= 21.281764     Pu=5";
+	PRsection->processLine(boostEncode(line));
+    REQUIRE(schedManager.stops.size() == 9);
+	REQUIRE(schedManager.stops[0].id == 284702);
+	REQUIRE(schedManager.stops[0].groupId == 2847);
+	REQUIRE(schedManager.stops[0].idInGroup == "02");
+	REQUIRE(schedManager.stops[0].street == boostEncode("<<Nowa Trasa>>"));
+	REQUIRE(schedManager.stops[0].direction == boostEncode("******************************"));
+	REQUIRE(schedManager.stops[0].lat == static_cast<float>(52.242145));
+	REQUIRE(schedManager.stops[0].lon == static_cast<float>(21.281764));
 }
 
 
